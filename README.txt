@@ -1,8 +1,8 @@
 Hands of Youth Service Association Canada website
 
-Upload the contents of this folder to your hosting provider.
+Upload the contents of this folder to GitHub Pages or your host.
 
-Included pages:
+Main pages:
 index.html
 discover.html
 tutoring.html
@@ -10,20 +10,27 @@ volunteer.html
 support.html
 contact.html
 
-Main folders:
-assets/css
-assets/js
-assets/images
+Main files:
+assets/css/styles.css
+assets/js/main.js
+assets/images/logo.png
 
-Photos were selected from the uploaded photo sets and compressed for faster loading.
-Only the best website friendly images were included, instead of all 200 photos, to keep the site fast.
+Visual updates included:
+Readable logo style font pairing
+Smaller header
+Header shrinks while scrolling
+Header fades away near the bottom
+Centered leadership photos
+Aria photo updated
+James photo updated with a white background
 
-Please review photo permissions before publishing, especially for photos that include students or children.
+Before publishing, update any placeholder email, phone, social links, and confirm photo consent.
 
-Contact details used:
-info@handsofyouth.ca
-admin@handsofyouth.ca
-discover@hysa.charity
-778 321 4639
 
-To replace a photo, put the new photo in assets/images and update the image file name in the related HTML page.
+Logo update:
+The screenshot logo has been replaced with a cleaner transparent HYSA logo.
+The main header uses assets/images/hysa_logo_mark.png.
+Other logo versions are saved in assets/images for future use:
+hysa_logo_official.png
+hysa_logo_clean.png
+hysa_bc_logo.png
