@@ -1,0 +1,5 @@
+{
+  "buildCommand": "sed -i \"s|process.env.VITE_SUPABASE_URL|$VITE_SUPABASE_URL|g\" admin.html && sed -i \"s|process.env.VITE_SUPABASE_ANON_KEY|$VITE_SUPABASE_ANON_KEY|g\" admin.html",
+  "outputDirectory": ".",
+  "cleanUrls": true
+}

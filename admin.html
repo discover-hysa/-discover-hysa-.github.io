@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Portal | Hands of Youth</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Cormorant Garamond", "Georgia", "serif"],
+            },
+            colors: {
+              "hysa-red": "#e11d48",
+              "hysa-yellow": "#facc15",
+            },
+          },
+        },
+      };
+    </script>
+
+    <script>
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-[#3a3a3a] text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col overflow-x-hidden relative selection:bg-rose-500 selection:text-white transition-colors duration-300">
+    <div
+      class="hidden dark:block absolute top-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-rose-500/10 to-orange-500/0 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div
+      class="hidden dark:block absolute top-[400px] right-10 w-[600px] h-[600px] bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent rounded-full blur-[140px] pointer-events-none z-0"></div>
+
+    <div
+      id="loginGate"
+      class="fixed inset-0 flex items-center justify-center p-6 z-50 bg-slate-50/90 dark:bg-[#3a3a3a]/95 backdrop-blur-xl transition-all duration-300">
+      <div
+        class="bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-8 sm:p-10 rounded-[2.5rem] w-full max-w-md shadow-2xl backdrop-blur-md relative">
+        <div class="text-center mb-8">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-500/5 to-orange-500/5 dark:from-rose-500/10 dark:to-orange-500/10 border border-rose-200 dark:border-rose-500/30 font-bold text-[11px] text-rose-600 dark:text-rose-300 uppercase tracking-widest mb-4 shadow-sm">
+            Management Platform
+          </div>
+          <h2 class="font-serif font-bold text-3xl text-slate-900 dark:text-white leading-tight">
+            Admin Authentication
+          </h2>
+          <p class="text-xs text-slate-400 mt-2">Enter administrative credentials to authorize entry.</p>
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <div class="flex flex-col gap-2">
+            <label for="email" class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              User-name:
+            </label>
+            <input
+              type="email"
+              id="email"
+              class="w-full bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 focus:border-rose-400 rounded-2xl p-4 text-sm text-slate-900 dark:text-white outline-none transition-all font-medium text-center" />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="pass" class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              Password:
+            </label>
+            <input
+              type="password"
+              id="pass"
+              class="w-full bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 focus:border-rose-400 rounded-2xl p-4 text-sm text-slate-900 dark:text-white outline-none transition-all font-medium tracking-widest text-center"
+              placeholder="••••••••••••••••" />
+          </div>
+
+          <button
+            onclick="checkAuth()"
+            class="w-full mt-2 rounded-full bg-rose-500 text-white font-bold text-[14px] tracking-widest uppercase py-4 shadow-[0_10px_25px_-5px_rgba(244,63,94,0.4)] hover:bg-rose-600 hover:scale-[1.02] transition-all duration-300 cursor-pointer">
+            Authorize Entry →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="dashboard" class="hidden flex-grow flex flex-col w-full relative z-10">
+      <header
+        class="sticky top-0 z-40 bg-white/80 dark:bg-[#3a3a3a]/70 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/5 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
+          <a href="index.html" class="flex items-center gap-3 shrink-0">
+            <img
+              class="w-11 h-11 object-contain bg-slate-900/5 dark:bg-white/10 p-1.5 rounded-xl border border-slate-900/10 dark:border-white/10"
+              src="assets/images/logo-icon.png"
+              alt="Logo Icon" />
+            <div class="flex flex-col leading-none">
+              <span class="font-bold tracking-tight text-slate-900 dark:text-white text-sm md:text-base">
+                Hands of Youth Service Association
+              </span>
+              <span class="text-[11px] font-medium text-slate-400 mt-0.5">Since 2020</span>
+            </div>
+          </a>
+
+          <div
+            class="flex flex-wrap justify-center lg:justify-end gap-x-5 gap-y-4 text-[14px] md:text-[16px] font-semibold text-slate-500 dark:text-slate-400 lg:-mr-6">
+            <a href="index.html" class="hover:text-hysa-red transition">Home</a>
+            <a href="discover.html" class="hover:text-hysa-red transition">Discover</a>
+            <a href="tutoring.html" class="hover:text-hysa-red transition">Peer2Peer</a>
+            <a href="volunteer.html" class="hover:text-hysa-red transition">Volunteer</a>
+            <a href="support.html" class="hover:text-hysa-red transition">Support Us</a>
+            <a href="contact.html" class="hover:text-hysa-red transition">Sign Up</a>
+            <a href="admin.html" class="text-hysa-red font-bold">Admin</a>
+          </div>
+
+          <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 dark:text-slate-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div
+          id="mobileMenu"
+          class="hidden md:hidden absolute top-20 left-0 w-full bg-white/95 dark:bg-[#3a3a3a]/90 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/5 p-6 flex flex-col gap-3 shadow-xl transition-all duration-300 z-50">
+          <a
+            href="index.html"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/5 transition-all"
+            >Home</a
+          >
+          <a
+            href="discover.html"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/5 transition-all"
+            >Discover</a
+          >
+          <a
+            href="tutoring.html"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/5 transition-all"
+            >Peer2Peer</a
+          >
+          <a
+            href="volunteer.html"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/5 transition-all"
+            >Volunteer</a
+          >
+          <a
+            href="support.html"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/5 transition-all"
+            >Support Us</a
+          >
+          <a
+            href="contact.html"
+            class="px-4 py-2.5 rounded-xl text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-900/5 dark:hover:bg-white/5 transition-all"
+            >Sign Up</a
+          >
+
+          <div class="h-px bg-slate-200/60 dark:bg-white/5 my-1"></div>
+
+          <button
+            onclick="toggleTheme()"
+            class="w-full text-left px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer">
+            <span class="dark:hidden">Dark Mode</span>
+            <span class="hidden dark:inline">Light Mode</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="flex-grow max-w-6xl mx-auto w-full px-6 py-12 md:py-16 space-y-12">
+        <section
+          class="bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-8 rounded-[2.5rem] shadow-xl backdrop-blur-md">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
+            <div>
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 font-bold text-[10px] text-rose-600 dark:text-rose-300 uppercase tracking-widest mb-3 shadow-sm">
+                Control Console
+              </div>
+              <h1 class="font-serif font-bold text-3xl text-slate-900 dark:text-white leading-tight">
+                Admin Control Dashboard
+              </h1>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                Filter database entries, view metrics, or compile backups.
+              </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <button
+                id="tsBtn"
+                onclick="toggleTimestamps()"
+                class="px-4 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer">
+                Timestamps: OFF
+              </button>
+              <button
+                onclick="exportToExcel()"
+                class="px-4 py-2.5 text-xs rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition-all cursor-pointer flex items-center gap-1">
+                Extract Data →
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="searchBar" class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500"
+              >Search Records</label
+            >
+            <input
+              type="text"
+              id="searchBar"
+              oninput="renderDashboard()"
+              placeholder="Search by name, email, class, comments, etc..."
+              class="w-full bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 focus:border-rose-400 rounded-2xl p-4 text-sm text-slate-900 dark:text-white outline-none transition-all" />
+          </div>
+        </section>
+
+        <div id="dataContainer" class="grid grid-cols-1 gap-8 max-w-4xl mx-auto"></div>
+      </main>
+
+      <footer
+        class="border-t border-slate-200/60 dark:border-white/5 text-slate-400 tracking-wide bg-white/40 dark:bg-[#3a3a3a]/40 py-12 transition-colors duration-300 mt-auto">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+          <div class="text-center md:text-left space-y-4">
+            <div class="flex items-center justify-center md:justify-start gap-4">
+              <img
+                class="w-11 h-11 object-contain bg-slate-900/5 dark:bg-white/10 p-1.5 rounded-xl border border-slate-900/10 dark:border-white/10"
+                src="assets/images/logo-icon.png"
+                alt="Hands of Youth logo crest" />
+              <div class="text-left">
+                <p class="font-bold text-sm text-slate-900 dark:text-white leading-none">
+                  Hands of Youth Service Association
+                </p>
+                <p class="text-[11px] font-medium text-slate-400 mt-1 uppercase tracking-widest leading-none">
+                  Since 2020
+                </p>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400/80">
+              © 2026 Hands of Youth Service Association (HYSA). All rights reserved.
+            </p>
+          </div>
+
+          <div
+            class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <a href="index.html" class="text-rose-500 hover:underline">Home</a>
+            <a href="discover.html" class="hover:text-slate-800 dark:hover:text-white hover:underline transition"
+              >Discover</a
+            >
+            <a href="tutoring.html" class="hover:text-slate-800 dark:hover:text-white hover:underline transition"
+              >Peer2Peer</a
+            >
+            <a href="volunteer.html" class="hover:text-slate-800 dark:hover:text-white hover:underline transition"
+              >Volunteer</a
+            >
+            <a href="support.html" class="hover:text-slate-800 dark:hover:text-white hover:underline transition"
+              >Support Us</a
+            >
+            <a href="contact.html" class="hover:text-slate-800 dark:hover:text-white hover:underline transition"
+              >Sign Up</a
+            >
+            <a href="admin.html" class="hover:text-slate-800 dark:hover:text-white hover:underline transition">Admin</a>
+            <a href="inquiry.html" class="hover:text-slate-800 dark:hover:text-white hover:underline transition"
+              >Inquiries</a
+            >
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="module">
+      const supabaseUrl = "process.env.VITE_SUPABASE_URL";
+      const supabaseKey = "process.env.VITE_SUPABASE_ANON_KEY";
+
+      if (!supabaseUrl || !supabaseKey || supabaseUrl.startsWith("process.env")) {
+        console.error("Supabase environment variables are missing or have not been replaced during deployment!");
+      }
+
+      const sb = window.supabase.createClient(supabaseUrl, supabaseKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+        },
+      });
+
+      window.sb = sb;
+
+      let showTimestamps = false;
+      let cachedData = {
+        students: [],
+        volunteers: [],
+        inquiries: [],
+        donors: [],
+      };
+
+      let currentCardIndices = {
+        students: 0,
+        volunteers: 0,
+        inquiries: 0,
+        donors: 0,
+      };
+
+      let answeredInquiries = JSON.parse(localStorage.getItem("answered_inquiries") || "{}");
+
+      let showProcessedInquiriesList = false;
+
+      async function checkAuth() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("pass").value;
+
+        if (!email || !password) {
+          alert("Please fill in both fields.");
+          return;
+        }
+
+        try {
+          const { data, error } = await sb.auth.signInWithPassword({
+            email: email,
+            password: password,
+          });
+
+          if (error) {
+            alert("Access Denied: " + error.message);
+          } else {
+            document.getElementById("loginGate").classList.add("hidden");
+            document.getElementById("dashboard").classList.remove("hidden");
+            fetchData();
+          }
+        } catch (err) {
+          console.error(err);
+          alert("An unexpected error occurred during sign-in.");
+        }
+      }
+
+      async function fetchData() {
+        const tables = ["donors", "students", "volunteers", "inquiries"];
+        for (const table of tables) {
+          const { data } = await sb.from(table).select("*");
+          cachedData[table] = data || [];
+          currentCardIndices[table] = 0;
+        }
+        renderDashboard();
+      }
+
+      function navigateCard(table, direction, customMax = null) {
+        const maxIndex = customMax !== null ? customMax - 1 : (cachedData[table] || []).length - 1;
+        if (maxIndex < 0) return;
+
+        currentCardIndices[table] += direction;
+
+        if (currentCardIndices[table] < 0) {
+          currentCardIndices[table] = maxIndex;
+        } else if (currentCardIndices[table] > maxIndex) {
+          currentCardIndices[table] = 0;
+        }
+
+        renderDashboard();
+      }
+
+      function toggleAnswered(recordId) {
+        if (answeredInquiries[recordId]) {
+          delete answeredInquiries[recordId];
+        } else {
+          answeredInquiries[recordId] = true;
+        }
+        localStorage.setItem("answered_inquiries", JSON.stringify(answeredInquiries));
+
+        currentCardIndices["inquiries"] = 0;
+
+        renderDashboard();
+      }
+
+      function toggleProcessedInquiriesList() {
+        showProcessedInquiriesList = !showProcessedInquiriesList;
+        renderDashboard();
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      function toggleTimestamps() {
+        showTimestamps = !showTimestamps;
+        document.getElementById("tsBtn").innerText = `Timestamps: ${showTimestamps ? "ON" : "OFF"}`;
+        renderDashboard();
+      }
+
+      function exportToExcel() {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        const tables = ["donors", "students", "volunteers", "inquiries"];
+
+        tables.forEach((table) => {
+          const data = cachedData[table] || [];
+          if (data.length === 0) return;
+
+          csvContent += `\nTABLE: ${table.toUpperCase()}\n`;
+          const headers = Object.keys(data[0]);
+          csvContent += headers.join(",") + "\n";
+
+          data.forEach((row) => {
+            const values = headers.map((header) => {
+              let val = row[header] === null ? "" : row[header];
+              return `"${val}"`;
+            });
+            csvContent += values.join(",") + "\n";
+          });
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "HYSA_Export_Data.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function toggleTheme() {
+        if (document.documentElement.classList.contains("dark")) {
+          document.documentElement.classList.remove("dark");
+          localStorage.setItem("theme", "light");
+        } else {
+          document.documentElement.classList.add("dark");
+          localStorage.setItem("theme", "dark");
+        }
+      }
+
+      function renderDashboard() {
+        const container = document.getElementById("dataContainer");
+        const filterText = document.getElementById("searchBar").value.toLowerCase();
+        container.innerHTML = "";
+
+        const tables = ["donors", "students", "volunteers", "inquiries"];
+        let answeredInquiriesList = [];
+
+        for (const table of tables) {
+          const allRows = cachedData[table] || [];
+
+          const rows = allRows.filter((row) => {
+            const matchesSearch = Object.values(row).some((val) => String(val).toLowerCase().includes(filterText));
+
+            if (table === "inquiries") {
+              const isAnswered = !!answeredInquiries[row.id];
+              if (isAnswered) {
+                if (matchesSearch) answeredInquiriesList.push(row);
+                return false;
+              }
+            }
+            return matchesSearch;
+          });
+
+          if (currentCardIndices[table] >= rows.length && rows.length > 0) {
+            currentCardIndices[table] = 0;
+          }
+
+          const activeIndex = currentCardIndices[table];
+          const hasRows = rows.length > 0;
+          const activeRow = hasRows ? rows[activeIndex] : null;
+          const recordId = activeRow ? activeRow.id : "";
+
+          let rowPropertiesHTML = "";
+          if (activeRow) {
+            rowPropertiesHTML = Object.entries(activeRow)
+              .map(([k, v]) => {
+                if (k === "created_at" && !showTimestamps) return "";
+                return `
+              <div class="p-4 rounded-xl bg-slate-900/[0.02] dark:bg-white/[0.01] border border-slate-200/50 dark:border-white/5 flex flex-col justify-start gap-1">
+                <span class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-none">${k.replace(/_/g, " ")}</span>
+                <span class="text-sm text-slate-800 dark:text-slate-200 font-semibold break-words whitespace-pre-wrap">${v !== null && v !== undefined ? v : "empty"}</span>
+              </div>`;
+              })
+              .join("");
+          }
+
+          let processedListHTML = "";
+          let toggleProcessedBtnHTML = "";
+
+          if (table === "inquiries" && answeredInquiriesList.length > 0) {
+            toggleProcessedBtnHTML = `
+              <div class="pt-4 border-t border-slate-100 dark:border-white/5">
+                <button onclick="toggleProcessedInquiriesList()" class="w-full py-2.5 px-4 text-xs font-bold rounded-xl border border-[#F3E803]/20 bg-[#F3E803]/5 hover:bg-[#F3E803]/10 text-[#F3E803] transition-all cursor-pointer flex justify-between items-center">
+                  <span>Processed Inquiries (${answeredInquiriesList.length})</span>
+                  <span>${showProcessedInquiriesList ? "▲ Hide" : "▼ Expand"}</span>
+                </button>
+              </div>`;
+
+            if (showProcessedInquiriesList) {
+              const processedItemsHTML = answeredInquiriesList
+                .map((inq) => {
+                  const subPropertiesHTML = Object.entries(inq)
+                    .map(([k, v]) => {
+                      if (k === "created_at" && !showTimestamps) return "";
+                      return `<span class="block text-[10px]"><strong class="uppercase text-slate-400">${k.replace(/_/g, " ")}:</strong> <span class="text-slate-700 dark:text-slate-300 font-medium">${v}</span></span>`;
+                    })
+                    .join("");
+
+                  return `
+                  <div class="p-4 rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50/50 dark:bg-black/20 flex flex-col gap-2">
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-white/5">
+                      <span class="text-xs font-bold text-slate-800 dark:text-slate-200">${inq.name || inq.email || "Processed Card"}</span>
+                      <button onclick="toggleAnswered('${inq.id}')" class="text-[10px] font-bold text-[#F3E803] hover:underline cursor-pointer bg-[#F3E803]/10 px-2 py-0.5 rounded">
+                        Reopen
+                      </button>
+                    </div>
+                    <div class="space-y-1">
+                      ${subPropertiesHTML}
+                    </div>
+                  </div>`;
+                })
+                .join("");
+
+              processedListHTML = `
+                <div class="mt-4 pt-4 border-t border-slate-100 dark:border-white/5 space-y-3 max-h-[280px] overflow-y-auto pr-1">
+                  <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Resolved Records Stack</h4>
+                  ${processedItemsHTML}
+                </div>`;
+            }
+          }
+
+          container.innerHTML += `
+        <section class="bg-white dark:bg-black border border-slate-200 dark:border-white/10 p-8 rounded-[2.5rem] shadow-xl backdrop-blur-md space-y-6 relative overflow-hidden">
+          <div class="flex items-center justify-between border-l-4 border-[#FB1C07] pl-4">
+            <div>
+              <h2 class="font-serif font-bold text-2xl capitalize text-slate-900 dark:text-white tracking-tight">${table}</h2>
+              <p class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-semibold mt-0.5">Database Feed Segment</p>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              ${
+                hasRows && table === "inquiries"
+                  ? `
+                  <button 
+                    onclick="toggleAnswered('${recordId}')" 
+                    title="Mark as Answered"
+                    class="flex items-center justify-center w-8 h-8 rounded-full border border-[#F3E803]/25 bg-[#F3E803]/10 hover:bg-[#F3E803] hover:text-black text-[#F3E803] transition-all cursor-pointer font-bold">
+                    ✓
+                  </button>
+                `
+                  : ""
+              }
+              ${hasRows ? `<span class="text-[11px] bg-red-50 dark:bg-[#FB1C07]/10 border border-[#FB1C07]/20 px-3 py-1 rounded-full text-[#FB1C07] font-bold">${activeIndex + 1} of ${rows.length} records</span>` : ""}
+            </div>
+          </div>
+          
+          <div class="relative min-h-[220px]">
+            ${
+              hasRows
+                ? `
+              <div class="flex flex-col justify-between h-full space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">${rowPropertiesHTML}</div>
+                
+                <div class="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-white/5">
+                  <button onclick="navigateCard('${table}', -1)" class="px-5 py-2.5 text-xs font-bold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-transparent text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 transition-all cursor-pointer">← Previous</button>
+                  <button onclick="navigateCard('${table}', 1)" class="px-5 py-2.5 text-xs font-bold rounded-xl bg-slate-950 dark:bg-white text-white dark:text-black hover:opacity-90 border border-[#FB1C07]/20 transition-all cursor-pointer">Next Record →</button>
+                </div>
+              </div>`
+                : `
+              <div class="border border-dashed border-slate-200 dark:border-white/10 p-16 rounded-2xl flex items-center justify-center">
+                <p class="text-xs text-slate-400 dark:text-slate-500 italic">No active records found.</p>
+              </div>`
+            }
+            ${toggleProcessedBtnHTML}
+            ${processedListHTML}
+          </div>
+        </section>`;
+        }
+      }
+
+      window.checkAuth = checkAuth;
+      window.navigateCard = navigateCard;
+      window.toggleAnswered = toggleAnswered;
+      window.toggleProcessedInquiriesList = toggleProcessedInquiriesList;
+      window.toggleMobileMenu = toggleMobileMenu;
+      window.toggleTimestamps = toggleTimestamps;
+      window.exportToExcel = exportToExcel;
+      window.toggleTheme = toggleTheme;
+      window.renderDashboard = renderDashboard;
+    </script>
+  </body>
+</html>

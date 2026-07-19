@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>General Inquiries | Hands of Youth</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              serif: ["Cormorant Garamond", "Georgia", "serif"],
+            },
+            colors: {
+              "hysa-red": "#fb1c07",
+              "hysa-yellow": "#f3e803",
+            },
+          },
+        },
+      };
+    </script>
+
+    <script>
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-[#3A3A3A] text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-300">
+    <header
+      class="sticky top-0 z-40 bg-slate-50/90 dark:bg-[#3A3A3A]/90 backdrop-blur-md border-b border-slate-200 dark:border-[#6C6C6C] transition-colors duration-300">
+      <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
+        <a class="flex items-center gap-3 shrink-0" href="index.html" aria-label="Hands of Youth home">
+          <img
+            class="w-[120px] h-auto object-contain bg-slate-100 dark:bg-[#4A4A4A] p-1 rounded-xl"
+            src="assets/images/Secondary_Logo _ Crest.png"
+            alt="Hands of Youth logo crest" />
+          <div class="hidden sm:block">
+            <p class="font-bold text-slate-900 dark:text-white text-[14px] tracking-tight leading-none">
+              Hands of Youth Service Association (HYSA)
+            </p>
+            <span class="text-[12px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-medium"
+              >Since 2020</span
+            >
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-[14px] font-semibold text-slate-600 dark:text-slate-400">
+          <a href="index.html" class="hover:text-hysa-red transition">Home</a>
+          <a href="discover.html" class="hover:text-hysa-red transition">Discover</a>
+          <a href="tutoring.html" class="hover:text-hysa-red transition">Peer2Peer</a>
+          <a href="volunteer.html" class="hover:text-hysa-red transition">Volunteer</a>
+          <a href="support.html" class="hover:text-hysa-red transition">Support Us</a>
+          <a href="contact.html" class="hover:text-hysa-red transition">Sign Up</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button
+            onclick="toggleTheme()"
+            class="p-2 px-3 rounded-xl border border-slate-200 dark:border-[#6C6C6C] text-[14px] font-semibold hover:bg-slate-100 dark:hover:bg-[#4A4A4A] transition-all">
+            Theme
+          </button>
+          <button
+            onclick="toggleMobileMenu()"
+            id="menuBtn"
+            class="md:hidden p-2 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-[#6C6C6C] rounded-xl">
+            ☰
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobileMenu"
+        class="hidden md:hidden border-t border-slate-200 dark:border-[#6C6C6C] bg-slate-50 dark:bg-[#3A3A3A] px-6 py-6 flex flex-col gap-4">
+        <a href="index.html" class="text-[14px] font-semibold text-slate-600 dark:text-slate-400">Home</a>
+        <a href="discover.html" class="text-[14px] font-semibold text-slate-600 dark:text-slate-400">Discover</a>
+        <a href="tutoring.html" class="text-[14px] font-semibold text-slate-600 dark:text-slate-400">Peer2Peer</a>
+        <a href="volunteer.html" class="text-[14px] font-semibold text-slate-600 dark:text-slate-400">Volunteer</a>
+        <a href="support.html" class="text-[14px] font-semibold text-slate-600 dark:text-slate-400">Support Us</a>
+        <a href="contact.html" class="text-[14px] font-semibold text-slate-600 dark:text-slate-400">Sign Up</a>
+      </div>
+    </header>
+
+    <main
+      class="flex-grow max-w-6xl mx-auto w-full px-6 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <section class="lg:col-span-5 space-y-8 lg:sticky lg:top-28">
+        <div>
+          <span
+            class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/30 font-bold text-[12px] text-hysa-red uppercase tracking-widest mb-4"
+            >Connect With Us</span
+          >
+          <h1
+            class="font-serif font-bold text-[36px] sm:text-[42px] text-slate-900 dark:text-white tracking-tight leading-[1.2] mb-4">
+            Get in touch <br />directly.
+          </h1>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+            Have questions about peer tutoring, volunteering, or sponsorship? Reach out using the paths below or
+            complete the inquiry form.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <div
+            class="p-5 bg-white dark:bg-[#4A4A4A] border border-slate-200 dark:border-[#6C6C6C] rounded-2xl flex items-start gap-4 shadow-sm">
+            <span class="text-xl mt-1">✉️</span>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                Email Addresses
+              </h3>
+              <p class="text-sm font-semibold text-slate-800 dark:text-white">
+                General:
+                <a href="mailto:info@handsofyouth.ca" class="text-hysa-red hover:underline">info@handsofyouth.ca</a>
+              </p>
+              <p class="text-sm font-semibold text-slate-800 dark:text-white mt-1">
+                Administration:
+                <a href="mailto:admin@handsofyouth.ca" class="text-hysa-red hover:underline">admin@handsofyouth.ca</a>
+              </p>
+              <p class="text-sm font-semibold text-slate-800 dark:text-white mt-1">
+                Discover:
+                <a href="discover@hysa.charity" class="text-hysa-red hover:underline">discover@hysa.charity</a>
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="p-5 bg-white dark:bg-[#4A4A4A] border border-slate-200 dark:border-[#6C6C6C] rounded-2xl flex items-start gap-4 shadow-sm">
+            <span class="text-xl mt-1">📞</span>
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                Phone Numbers
+              </h3>
+              <p class="text-sm font-semibold text-slate-800 dark:text-white">
+                Phone: <a href="tel:+17783214639" class="hover:text-hysa-red transition">+1 (778) 321 4639</a>
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="p-6 bg-gradient-to-br from-red-500/5 to-orange-500/5 dark:from-red-950/20 dark:to-orange-950/20 border border-red-200/60 dark:border-red-900/40 rounded-2xl shadow-sm">
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Looking to register?</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+              If you are looking to register as a student, apply as a volunteer, or join as a tutor, bypass this inquiry
+              form and head to our sign-up page.
+            </p>
+            <a
+              href="contact.html"
+              class="inline-flex items-center justify-center text-center px-4 py-2.5 bg-hysa-red hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md">
+              Go to Sign-Up Page →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="lg:col-span-7 w-full">
+        <div
+          class="w-full bg-white dark:bg-[#4A4A4A] border border-slate-200 dark:border-[#6C6C6C] rounded-[2.5rem] shadow-xl p-8 sm:p-12 transition-colors duration-300 relative overflow-hidden">
+          <div id="formContainer">
+            <div class="mb-8 flex flex-col items-start text-left">
+              <span
+                class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/30 font-bold text-[12px] text-hysa-red uppercase tracking-widest mb-4"
+                >Direct Message</span
+              >
+              <h2
+                class="font-serif font-bold text-[28px] sm:text-[34px] text-slate-900 dark:text-white tracking-tight leading-[1.2]">
+                How can we <span class="text-hysa-red">support you</span>?
+              </h2>
+            </div>
+
+            <form id="inquiryForm" class="space-y-6">
+              <div>
+                <label
+                  class="block text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2"
+                  >Your Name</label
+                >
+                <input
+                  type="text"
+                  id="userName"
+                  required
+                  class="w-full bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-hysa-red dark:focus:border-hysa-red transition"
+                  placeholder="Your full name" />
+              </div>
+              <div>
+                <label
+                  class="block text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2"
+                  >Email Address</label
+                >
+                <input
+                  type="email"
+                  id="userEmail"
+                  required
+                  class="w-full bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-hysa-red dark:focus:border-hysa-red transition"
+                  placeholder="name@example.com" />
+              </div>
+              <div>
+                <label
+                  class="block text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2"
+                  >What is your question about?</label
+                >
+                <div class="relative">
+                  <select
+                    id="inquiryType"
+                    required
+                    class="w-full bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-hysa-red dark:focus:border-hysa-red transition appearance-none">
+                    <option value="general">General Question / Other Inquiry</option>
+                    <option value="tutoring-join">How to join as a student</option>
+                    <option value="volunteer-info">Volunteering hours</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500 dark:text-slate-400">
+                    ▼
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label
+                  class="block text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2"
+                  >Your Message</label
+                >
+                <textarea
+                  id="userMessage"
+                  rows="4"
+                  required
+                  class="w-full bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] rounded-xl px-4 py-3.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-hysa-red dark:focus:border-hysa-red transition"
+                  placeholder="Type your questions here..."></textarea>
+              </div>
+
+              <button
+                type="submit"
+                id="submitBtn"
+                class="inline-flex items-center justify-center text-center px-6 py-4 bg-hysa-red hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all w-full">
+                Send Inquiry
+              </button>
+            </form>
+          </div>
+
+          <div id="successContainer" class="hidden text-center py-12 flex flex-col items-center justify-center">
+            <h2
+              class="font-serif font-bold text-[36px] sm:text-[42px] text-slate-900 dark:text-white mb-4 tracking-tight leading-[1.2]">
+              Your question <span class="text-hysa-red">has been received</span>
+            </h2>
+            <p class="text-slate-500 dark:text-slate-400 text-sm max-w-xs mb-8 leading-relaxed">
+              Someone from the team will return to you as soon as they can.
+            </p>
+            <a
+              href="index.html"
+              class="inline-flex items-center justify-center text-center px-8 py-3.5 bg-hysa-red hover:bg-red-700 text-white font-bold text-sm rounded-xl transition-all"
+              >Return Home</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="border-t border-slate-200 dark:border-[#6C6C6C] text-slate-400 tracking-wide bg-slate-50 dark:bg-[#3A3A3A] py-12 transition-colors duration-300">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-8 flex flex-col gap-8">
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-8">
+          <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left lg:-ml-6">
+            <img
+              class="w-[150px] h-auto object-contain"
+              src="assets/images/Secondary_Logo _ Crest.png"
+              alt="Hands of Youth logo crest" />
+            <div>
+              <p class="font-bold text-[20px] text-slate-900 dark:text-white">Hands of Youth Service Association</p>
+              <p class="text-[12px] text-slate-400 uppercase tracking-widest leading-none mt-1">Since 2020</p>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-wrap justify-center lg:justify-end gap-x-5 gap-y-4 text-[14px] md:text-[16px] font-semibold text-slate-500 dark:text-slate-400 lg:-mr-6">
+            <a href="index.html" class="hover:text-hysa-red transition">Home</a>
+            <a href="discover.html" class="hover:text-hysa-red transition">Discover</a>
+            <a href="tutoring.html" class="hover:text-hysa-red transition">Peer2Peer</a>
+            <a href="volunteer.html" class="hover:text-hysa-red transition">Volunteer</a>
+            <a href="support.html" class="hover:text-hysa-red transition">Support Us</a>
+            <a href="contact.html" class="hover:text-hysa-red transition">Contact</a>
+            <a href="admin.html" class="hover:text-hysa-red transition">Admin</a>
+            <a href="inquiry.html" class="text-hysa-red transition">Inquiries</a>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200/50 dark:border-[#6C6C6C]/50 w-full text-center">
+          <p class="text-[12px] md:text-[14px] text-slate-400">
+            © 2026 Hands of Youth Service Association (HYSA). All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+      const SUPABASE_ANON_KEY =import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const inquiryForm = document.getElementById("inquiryForm");
+      const formContainer = document.getElementById("formContainer");
+      const successContainer = document.getElementById("successContainer");
+      const submitBtn = document.getElementById("submitBtn");
+
+      if (inquiryForm) {
+        inquiryForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          submitBtn.disabled = true;
+          submitBtn.innerText = "Sending...";
+
+          const name = document.getElementById("userName").value;
+          const email = document.getElementById("userEmail").value;
+          const type = document.getElementById("inquiryType").value;
+          const message = document.getElementById("userMessage").value;
+
+          try {
+            const { data, error } = await supabaseClient
+              .from("inquiries")
+              .insert([{ name: name, email: email, type: type, message: message }]);
+
+            if (error) throw error;
+
+            formContainer.classList.add("hidden");
+            successContainer.classList.remove("hidden");
+          } catch (err) {
+            console.error("Submission failed:", err.message);
+            alert("Something went wrong. Please try again.");
+
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Send Inquiry";
+          }
+        });
+      }
+
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobileMenu");
+        const btn = document.getElementById("menuBtn");
+        menu.classList.toggle("hidden");
+        btn.innerText = menu.classList.contains("hidden") ? "☰" : "✕";
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+        localStorage.setItem("theme", document.documentElement.classList.contains("dark") ? "dark" : "light");
+      }
+    </script>
+  </body>
+</html>
