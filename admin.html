@@ -275,11 +275,11 @@
       </footer>
     </div>
     <script type="module">
-      const supabaseUrl = "process.env.VITE_SUPABASE_URL";
-      const supabaseKey = "process.env.VITE_SUPABASE_ANON_KEY";
+      const supabaseUrl = "__VITE_SUPABASE_URL__";
+      const supabaseKey = "__VITE_SUPABASE_ANON_KEY__";
 
-      if (!supabaseUrl || !supabaseKey || supabaseUrl.startsWith("process.env")) {
-        console.error("Supabase environment variables are missing or have not been replaced during deployment!");
+      if (supabaseUrl.includes("__VITE_") || !supabaseUrl.startsWith("http")) {
+        console.error("Supabase environment variables were not replaced by Vercel deployment!");
       }
 
       const sb = window.supabase.createClient(supabaseUrl, supabaseKey, {
