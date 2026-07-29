@@ -333,8 +333,8 @@
       };
 
       try {
-        const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-        const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        const SUPABASE_URL = "__VITE_SUPABASE_URL__";
+        const SUPABASE_ANON_KEY = "__VITE_SUPABASE_ANON_KEY__";
 
         if (SUPABASE_URL && SUPABASE_ANON_KEY && typeof supabase !== "undefined") {
           const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

@@ -333,9 +333,8 @@
     </main>
 
     <script>
-      const SUPABASE_URL = "https://wgjlemjqcqewlwryvlts.supabase.co";
-      const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndnamxlbWpxY3Fld2x3cnl2bHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDI4OTUsImV4cCI6MjA5ODIxODg5NX0.5nlAhNX8_TULW0RfyUi9k8cSjvMU850b-DjYJt1T5Bg";
+      const SUPABASE_URL = "__VITE_SUPABASE_URL__";
+      const SUPABASE_ANON_KEY = "__VITE_SUPABASE_ANON_KEY__";
       const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       let currentFormType = "student";
 
