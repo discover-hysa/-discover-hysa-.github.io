@@ -90,7 +90,7 @@
           </div>
 
           <button
-            onclick="checkAuth()"
+            onclick="window.checkAuth()"
             class="w-full mt-2 rounded-full bg-rose-500 text-white font-bold text-[14px] tracking-widest uppercase py-4 shadow-[0_10px_25px_-5px_rgba(244,63,94,0.4)] hover:bg-rose-600 hover:scale-[1.02] transition-all duration-300 cursor-pointer">
             Authorize Entry →
           </button>
@@ -126,7 +126,7 @@
             <a href="admin.html" class="text-hysa-red font-bold">Admin</a>
           </div>
 
-          <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 dark:text-slate-200">
+          <button onclick="window.toggleMobileMenu()" class="md:hidden p-2 text-slate-700 dark:text-slate-200">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
@@ -170,7 +170,7 @@
           <div class="h-px bg-slate-200/60 dark:bg-white/5 my-1"></div>
 
           <button
-            onclick="toggleTheme()"
+            onclick="window.toggleTheme()"
             class="w-full text-left px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-200 text-xs font-bold uppercase tracking-wider hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer">
             <span class="dark:hidden">Dark Mode</span>
             <span class="hidden dark:inline">Light Mode</span>
@@ -197,12 +197,12 @@
             <div class="flex items-center gap-3 shrink-0">
               <button
                 id="tsBtn"
-                onclick="toggleTimestamps()"
+                onclick="window.toggleTimestamps()"
                 class="px-4 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-50 dark:hover:bg-white/10 transition-all cursor-pointer">
                 Timestamps: OFF
               </button>
               <button
-                onclick="exportToExcel()"
+                onclick="window.exportToExcel()"
                 class="px-4 py-2.5 text-xs rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition-all cursor-pointer flex items-center gap-1">
                 Extract Data →
               </button>
@@ -216,7 +216,7 @@
             <input
               type="text"
               id="searchBar"
-              oninput="renderDashboard()"
+              oninput="window.renderDashboard()"
               placeholder="Search by name, email, class, comments, etc..."
               class="w-full bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 focus:border-rose-400 rounded-2xl p-4 text-sm text-slate-900 dark:text-white outline-none transition-all" />
           </div>
@@ -274,6 +274,7 @@
         </div>
       </footer>
     </div>
+
     <script type="module">
       const supabaseUrl = "__VITE_SUPABASE_URL__";
       const supabaseKey = "__VITE_SUPABASE_ANON_KEY__";
@@ -307,7 +308,6 @@
       };
 
       let answeredInquiries = JSON.parse(localStorage.getItem("answered_inquiries") || "{}");
-
       let showProcessedInquiriesList = false;
 
       async function checkAuth() {
@@ -370,9 +370,7 @@
           answeredInquiries[recordId] = true;
         }
         localStorage.setItem("answered_inquiries", JSON.stringify(answeredInquiries));
-
         currentCardIndices["inquiries"] = 0;
-
         renderDashboard();
       }
 
@@ -485,7 +483,7 @@
           if (table === "inquiries" && answeredInquiriesList.length > 0) {
             toggleProcessedBtnHTML = `
               <div class="pt-4 border-t border-slate-100 dark:border-white/5">
-                <button onclick="toggleProcessedInquiriesList()" class="w-full py-2.5 px-4 text-xs font-bold rounded-xl border border-[#F3E803]/20 bg-[#F3E803]/5 hover:bg-[#F3E803]/10 text-[#F3E803] transition-all cursor-pointer flex justify-between items-center">
+                <button onclick="window.toggleProcessedInquiriesList()" class="w-full py-2.5 px-4 text-xs font-bold rounded-xl border border-[#F3E803]/20 bg-[#F3E803]/5 hover:bg-[#F3E803]/10 text-[#F3E803] transition-all cursor-pointer flex justify-between items-center">
                   <span>Processed Inquiries (${answeredInquiriesList.length})</span>
                   <span>${showProcessedInquiriesList ? "▲ Hide" : "▼ Expand"}</span>
                 </button>
@@ -505,7 +503,7 @@
                   <div class="p-4 rounded-xl border border-slate-200 dark:border-white/5 bg-slate-50/50 dark:bg-black/20 flex flex-col gap-2">
                     <div class="flex justify-between items-center pb-2 border-b border-slate-100 dark:border-white/5">
                       <span class="text-xs font-bold text-slate-800 dark:text-slate-200">${inq.name || inq.email || "Processed Card"}</span>
-                      <button onclick="toggleAnswered('${inq.id}')" class="text-[10px] font-bold text-[#F3E803] hover:underline cursor-pointer bg-[#F3E803]/10 px-2 py-0.5 rounded">
+                      <button onclick="window.toggleAnswered('${inq.id}')" class="text-[10px] font-bold text-[#F3E803] hover:underline cursor-pointer bg-[#F3E803]/10 px-2 py-0.5 rounded">
                         Reopen
                       </button>
                     </div>
@@ -537,7 +535,7 @@
                 hasRows && table === "inquiries"
                   ? `
                   <button 
-                    onclick="toggleAnswered('${recordId}')" 
+                    onclick="window.toggleAnswered('${recordId}')" 
                     title="Mark as Answered"
                     class="flex items-center justify-center w-8 h-8 rounded-full border border-[#F3E803]/25 bg-[#F3E803]/10 hover:bg-[#F3E803] hover:text-black text-[#F3E803] transition-all cursor-pointer font-bold">
                     ✓
@@ -557,8 +555,8 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">${rowPropertiesHTML}</div>
                 
                 <div class="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-white/5">
-                  <button onclick="navigateCard('${table}', -1)" class="px-5 py-2.5 text-xs font-bold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-transparent text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 transition-all cursor-pointer">← Previous</button>
-                  <button onclick="navigateCard('${table}', 1)" class="px-5 py-2.5 text-xs font-bold rounded-xl bg-slate-950 dark:bg-white text-white dark:text-black hover:opacity-90 border border-[#FB1C07]/20 transition-all cursor-pointer">Next Record →</button>
+                  <button onclick="window.navigateCard('${table}', -1)" class="px-5 py-2.5 text-xs font-bold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-transparent text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-white/5 transition-all cursor-pointer">← Previous</button>
+                  <button onclick="window.navigateCard('${table}', 1)" class="px-5 py-2.5 text-xs font-bold rounded-xl bg-slate-950 dark:bg-white text-white dark:text-black hover:opacity-90 border border-[#FB1C07]/20 transition-all cursor-pointer">Next Record →</button>
                 </div>
               </div>`
                 : `
@@ -573,6 +571,7 @@
         }
       }
 
+      // Expose functions globally to fix scope issues
       window.checkAuth = checkAuth;
       window.navigateCard = navigateCard;
       window.toggleAnswered = toggleAnswered;
