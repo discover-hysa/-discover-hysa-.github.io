@@ -1,5 +1,5 @@
 {
-  "buildCommand": "sed -i \"s|__VITE_SUPABASE_URL__|$VITE_SUPABASE_URL|g\" admin.html && sed -i \"s|__VITE_SUPABASE_ANON_KEY__|$VITE_SUPABASE_ANON_KEY|g\" admin.html",
+  "buildCommand": "echo 'window._env = { SUPABASE_URL: \"'\"$VITE_SUPABASE_URL\"'\", SUPABASE_ANON_KEY: \"'\"$VITE_SUPABASE_ANON_KEY\"'\" };' > env-config.js",
   "outputDirectory": ".",
   "cleanUrls": true
 }

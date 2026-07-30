@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Portal | Hands of Youth</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+    <script src="env-config.js"></script>
     <link rel="icon" type="image/png" href="assets/images/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -299,11 +299,11 @@
 
       // Initialize Supabase once DOM is ready
       window.addEventListener("DOMContentLoaded", () => {
-        const supabaseUrl = "__VITE_SUPABASE_URL__";
-        const supabaseKey = "__VITE_SUPABASE_ANON_KEY__";
+        const supabaseUrl = window._env?.SUPABASE_URL || "__VITE_SUPABASE_URL__";
+        const supabaseKey = window._env?.SUPABASE_ANON_KEY || "__VITE_SUPABASE_ANON_KEY__";
 
-        if (supabaseUrl.includes("__VITE_") || !supabaseUrl.startsWith("http")) {
-          console.error("Supabase environment variables were not replaced by Vercel deployment!");
+        if (!supabaseUrl || supabaseUrl.includes("__VITE_")) {
+          console.error("Supabase environment variables were not injected properly!");
         } else {
           sb = window.supabase.createClient(supabaseUrl, supabaseKey, {
             auth: {
