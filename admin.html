@@ -275,9 +275,10 @@
       </footer>
     </div>
 
+    <
     <script>
-      // Standard script block allows immediate global function availability
-      let sb;
+      // Global application state variables
+      let sb = null;
       let showTimestamps = false;
       let cachedData = {
         students: [],
@@ -296,29 +297,36 @@
       let answeredInquiries = JSON.parse(localStorage.getItem("answered_inquiries") || "{}");
       let showProcessedInquiriesList = false;
 
-      // Initialize Supabase after DOM loads to ensure replacement worked
+      // Initialize Supabase once DOM is ready
       window.addEventListener("DOMContentLoaded", () => {
         const supabaseUrl = "__VITE_SUPABASE_URL__";
         const supabaseKey = "__VITE_SUPABASE_ANON_KEY__";
 
         if (supabaseUrl.includes("__VITE_") || !supabaseUrl.startsWith("http")) {
           console.error("Supabase environment variables were not replaced by Vercel deployment!");
+        } else {
+          sb = window.supabase.createClient(supabaseUrl, supabaseKey, {
+            auth: {
+              persistSession: true,
+              autoRefreshToken: true,
+            },
+          });
+          window.sb = sb;
         }
-
-        sb = window.supabase.createClient(supabaseUrl, supabaseKey, {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-          },
-        });
       });
 
+      // Global functions called via inline HTML onclick attributes
       async function checkAuth() {
         const email = document.getElementById("email").value;
         const password = document.getElementById("pass").value;
 
         if (!email || !password) {
           alert("Please fill in both fields.");
+          return;
+        }
+
+        if (!sb) {
+          alert("Supabase client is not initialized. Please verify your Vercel environment variables.");
           return;
         }
 
@@ -342,6 +350,7 @@
       }
 
       async function fetchData() {
+        if (!sb) return;
         const tables = ["donors", "students", "volunteers", "inquiries"];
         for (const table of tables) {
           const { data } = await sb.from(table).select("*");
@@ -384,12 +393,17 @@
 
       function toggleMobileMenu() {
         const menu = document.getElementById("mobileMenu");
-        menu.classList.toggle("hidden");
+        if (menu) {
+          menu.classList.toggle("hidden");
+        }
       }
 
       function toggleTimestamps() {
         showTimestamps = !showTimestamps;
-        document.getElementById("tsBtn").innerText = `Timestamps: ${showTimestamps ? "ON" : "OFF"}`;
+        const btn = document.getElementById("tsBtn");
+        if (btn) {
+          btn.innerText = `Timestamps: ${showTimestamps ? "ON" : "OFF"}`;
+        }
         renderDashboard();
       }
 
@@ -435,7 +449,10 @@
 
       function renderDashboard() {
         const container = document.getElementById("dataContainer");
-        const filterText = document.getElementById("searchBar").value.toLowerCase();
+        const searchInput = document.getElementById("searchBar");
+        if (!container || !searchInput) return;
+
+        const filterText = searchInput.value.toLowerCase();
         container.innerHTML = "";
 
         const tables = ["donors", "students", "volunteers", "inquiries"];
