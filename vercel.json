@@ -1,5 +1,3 @@
 {
-  "buildCommand": "echo 'window._env = { SUPABASE_URL: \"'\"$VITE_SUPABASE_URL\"'\", SUPABASE_ANON_KEY: \"'\"$VITE_SUPABASE_ANON_KEY\"'\" };' > env-config.js",
-  "outputDirectory": ".",
-  "cleanUrls": true
+  "outputDirectory": "."
 }
