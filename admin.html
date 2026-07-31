@@ -284,7 +284,6 @@
     </div>
 
     <script>
-      // Global application state variables
       let sb = null;
       let showTimestamps = false;
       let cachedData = {
@@ -304,7 +303,6 @@
       let answeredInquiries = JSON.parse(localStorage.getItem("answered_inquiries") || "{}");
       let showProcessedInquiriesList = false;
 
-      // Initialize Supabase once DOM is ready
       window.addEventListener("DOMContentLoaded", () => {
         const supabaseUrl = "https://wgjlemjqcqewlwryvlts.supabase.co";
         const supabaseKey =
@@ -323,7 +321,6 @@
         }
       });
 
-      // Global functions called via inline HTML onclick attributes
       async function checkAuth() {
         const email = document.getElementById("email").value;
         const password = document.getElementById("pass").value;
