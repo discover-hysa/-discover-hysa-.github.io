@@ -57,10 +57,6 @@
       <div
         class="bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-8 sm:p-10 rounded-[2.5rem] w-full max-w-md shadow-2xl backdrop-blur-md relative">
         <div class="text-center mb-8">
-          <div
-            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-rose-500/5 to-orange-500/5 dark:from-rose-500/10 dark:to-orange-500/10 border border-rose-200 dark:border-rose-500/30 font-bold text-[11px] text-rose-600 dark:text-rose-300 uppercase tracking-widest mb-4 shadow-sm">
-            Management Platform
-          </div>
           <h2 class="font-serif font-bold text-3xl text-slate-900 dark:text-white leading-tight">
             Admin Authentication
           </h2>
@@ -82,11 +78,23 @@
             <label for="pass" class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
               Password:
             </label>
-            <input
-              type="password"
-              id="pass"
-              class="w-full bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 focus:border-rose-400 rounded-2xl p-4 text-sm text-slate-900 dark:text-white outline-none transition-all font-medium text-center"
-              placeholder="Enter password" />
+            <div class="relative w-full">
+              <input
+                type="password"
+                id="pass"
+                class="w-full bg-slate-50 dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 focus:border-rose-400 rounded-2xl p-4 pr-12 text-sm text-slate-900 dark:text-white outline-none transition-all font-medium text-center"
+                placeholder="Enter password" />
+              <button
+                type="button"
+                onclick="
+                  const p = document.getElementById('pass');
+                  p.type = p.type === 'password' ? 'text' : 'password';
+                  this.textContent = p.type === 'password' ? '👁️' : '👁️‍🗨️';
+                "
+                class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white text-sm cursor-pointer select-none">
+                👁️
+              </button>
+            </div>
           </div>
 
           <button

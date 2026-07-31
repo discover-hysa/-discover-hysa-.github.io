@@ -88,7 +88,7 @@
           <div class="bg-slate-100 dark:bg-[#4A4A4A] p-2.5 rounded-xl flex items-center justify-center">
             <img
               class="w-[120px] h-auto object-contain"
-              src="assets/images/Secondary_Logo _ Crest.png"
+              src="assets/images/logo-icon.png"
               alt="Hands of Youth logo crest" />
           </div>
           <div class="hidden sm:block">
@@ -168,12 +168,6 @@
 
     <main class="flex-grow max-w-6xl mx-auto w-full px-6 py-12 md:py-20 relative z-10">
       <section class="text-center max-w-3xl mx-auto mb-12">
-        <div
-          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/30 font-semibold text-[12px] text-hysa-red uppercase tracking-widest mb-8">
-          <span class="w-2 h-2 rounded-full bg-hysa-red animate-ping"></span>
-          Registry Application
-        </div>
-
         <h1 class="text-[48px] sm:text-[64px] font-bold text-slate-900 dark:text-white leading-tight mb-4">
           Be a part of something <span class="text-hysa-red">good.</span>
         </h1>
@@ -333,8 +327,10 @@
     </main>
 
     <script>
-      const SUPABASE_URL = "__VITE_SUPABASE_URL__";
-      const SUPABASE_ANON_KEY = "__VITE_SUPABASE_ANON_KEY__";
+      const supabaseUrl = "https://wgjlemjqcqewlwryvlts.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndnamxlbWpxY3Fld2x3cnl2bHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDI4OTUsImV4cCI6MjA5ODIxODg5NX0.5nlAhNX8_TULW0RfyUi9k8cSjvMU850b-DjYJt1T5Bg";
+
       const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       let currentFormType = "student";
 
