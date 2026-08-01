@@ -353,10 +353,12 @@
               const message = document.getElementById("userMessage").value;
 
               try {
-                const { data, error } = await supabaseClient
-                  .from("inquiries")
-                  .insert([{ name: name, email: email, type: type, message: message }]);
-
+                const { data, error } = await supabaseClient.from("inquiries").insert({
+                  name: name,
+                  email: email,
+                  type: type,
+                  message: message,
+                });
                 if (error) throw error;
 
                 formContainer.classList.add("hidden");
