@@ -333,8 +333,9 @@
         const supabaseKey =
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndnamxlbWpxY3Fld2x3cnl2bHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDI4OTUsImV4cCI6MjA5ODIxODg5NX0.5nlAhNX8_TULW0RfyUi9k8cSjvMU850b-DjYJt1T5Bg";
 
-        if (SUPABASE_URL && SUPABASE_ANON_KEY && typeof supabase !== "undefined") {
-          const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // FIXED: Using lowercase supabaseUrl and supabaseKey matching the declarations above
+        if (supabaseUrl && supabaseKey && typeof supabase !== "undefined") {
+          const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
           const inquiryForm = document.getElementById("inquiryForm");
           const formContainer = document.getElementById("formContainer");
           const successContainer = document.getElementById("successContainer");
