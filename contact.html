@@ -311,7 +311,7 @@
         </div>
       </div>
       <footer
-        class="border-t border-slate-200 dark:border-[#6C6C6C] text-slate-400 tracking-wide bg-slate-50 dark:bg-[#3A3A3A] py-12 transition-colors duration-300">
+        class="mt-12 sm:mt-16 border-t border-slate-200 dark:border-[#6C6C6C] text-slate-400 tracking-wide bg-slate-50 dark:bg-[#3A3A3A] py-12 transition-colors duration-300">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-8 flex flex-col gap-8">
           <div class="flex flex-col lg:flex-row justify-between items-center gap-8">
             <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left lg:-ml-6">
@@ -421,8 +421,20 @@
               <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Math Program (Friday 6:30–8:00 PM PST)</span>
             </label>
             <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] hover:border-hysa-red transition-all cursor-pointer">
-              <input type="checkbox" name="vol-positions" value="Social Media Team" id="vol-social" class="accent-hysa-red rounded">
-              <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Social Media Team</span>
+              <input type="checkbox" name="vol-positions" value="French Program" id="vol-french" class="accent-hysa-red rounded">
+              <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">French Program</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] hover:border-hysa-red transition-all cursor-pointer">
+              <input type="checkbox" name="vol-positions" value="Science Program" id="vol-science" class="accent-hysa-red rounded">
+              <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Science Program</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] hover:border-hysa-red transition-all cursor-pointer">
+              <input type="checkbox" name="vol-positions" value="Leadership" id="vol-leadership" class="accent-hysa-red rounded">
+              <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Leadership</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] hover:border-hysa-red transition-all cursor-pointer">
+              <input type="checkbox" name="vol-positions" value="Social Media | Creative Team" id="vol-social" class="accent-hysa-red rounded">
+              <span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Social Media | Creative Team</span>
             </label>
             <label class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-[#3A3A3A] border border-slate-200 dark:border-[#6C6C6C] hover:border-hysa-red transition-all cursor-pointer">
               <input type="checkbox" name="vol-positions" value="Logistics Team" id="vol-logistics" class="accent-hysa-red rounded">
@@ -539,7 +551,8 @@
           payload.parent_email = document.getElementById("field-parent-email").value;
           payload.parent_social = document.getElementById("field-parent-social").value;
           payload.parent_phone = document.getElementById("field-parent-phone").value;
-          payload.comments = "Current grade: " + document.getElementById("field-grade").value + "\n\nAdditional comments: " + document.getElementById("field-comments").value;
+          payload.grade = document.getElementById("field-grade").value;
+          payload.comments = document.getElementById("field-comments").value;
 
           let classesArr = [];
           document.querySelectorAll('input[name="classes"]:checked').forEach((c) => classesArr.push(c.value));
